@@ -39,7 +39,7 @@ export default function RootLayout({
       `,
     }}
   />
-  <script
+ <script
   dangerouslySetInnerHTML={{
     __html: `
       !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){
@@ -48,9 +48,16 @@ export default function RootLayout({
       typeof a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){
       var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=
       function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags reloadFeatureFlags".split(" ");
-      for(n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1.2,
-      e.init('phc_AqdCjyLV8H79u7HiARctDyahve6fYJM0tFsGMEpkNSW',{api_host:'https://us.i.posthog.com'})}
-      (document,window.posthog||[]);
+      for(n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1.2); 
+      posthog.init('phc_AqdCjyLV8H79u7HiARctDyahve6fYJM0tFsGMEpkNSW',{
+        api_host:'https://us.i.posthog.com',
+        capture_pageview: true,
+        capture_pageleave: true
+      });
+      window.addEventListener('load', function(){
+        // fire an explicit pageview + a simple test event
+        try { posthog.capture('$pageview'); posthog.capture('page_loaded'); } catch(e){}
+      });
     `,
   }}
 />
